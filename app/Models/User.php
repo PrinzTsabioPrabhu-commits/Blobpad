@@ -7,6 +7,9 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\Contracts\PasskeyUser;
@@ -32,5 +35,64 @@ class User extends Authenticatable implements PasskeyUser
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
         ];
+    }
+
+    /**
+     * Workspaces owned by this user.
+     */
+    public function ownedWorkspaces(): HasMany
+    {
+        return $this->hasMany(Workspace::class, 'owner_id');
+    }
+
+    /**
+     * Workspaces this user has joined as a collaborator.
+     */
+    public function joinedWorkspaces(): BelongsToMany
+    {
+        return $this->belongsToMany(Workspace::class, 'workspace_members')
+                    ->withPivot('role')
+                    ->withTimestamps();
+    }
+
+    /**
+     * User settings/preferences.
+     */
+    public function preference(): HasOne
+    {
+        return $this->hasOne(UserPreference::class);
+    }
+
+    /**
+     * Notes created by this user.
+     */
+    public function notes(): HasMany
+    {
+        return $this->hasMany(Note::class);
+    }
+
+    /**
+     * Notes favorited by this user.
+     */
+    public function favoriteNotes(): BelongsToMany
+    {
+        return $this->belongsToMany(Note::class, 'favorite_notes')
+                    ->withPivot('created_at');
+    }
+
+    /**
+     * Reminders set for this user.
+     */
+    public function reminders(): HasMany
+    {
+        return $this->hasMany(Reminder::class);
+    }
+
+    /**
+     * Search history logs for this user.
+     */
+    public function searchHistories(): HasMany
+    {
+        return $this->hasMany(SearchHistory::class);
     }
 }
