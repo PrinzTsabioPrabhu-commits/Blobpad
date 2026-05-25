@@ -141,3 +141,63 @@
         @apply bg-background text-foreground;
     }
 }
+
+/* ================================================
+   MINIMAL LIGHT THE  ================================================ */
+
+/* Minimal animations */
+@keyframes fade-in-up {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slide-in-up {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-fade-in-up { animation: fade-in-up 0.6s ease forwards; }
+
+/* Minimal accent colors */
+.accent-mint { color: #059669; background-color: #d1fae5; }
+.accent-sky { color: #0284c7; background-color: #e0f2fe; }
+.accent-violet { color: #7c3aed; background-color: #ede9fe; }
+.accent-rose { color: #e11d48; background-color: #ffe4e6; }
+.accent-amber { color: #d97706; background-color: #fef3c7; }
+.accent-indigo { color: #4f46e5; background-color: #eef2ff; }
+
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+
+/* Minimal button */
+.btn-minimal {
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+}
+.btn-minimal:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px oklch(0 0 0 / 0.08);
+}
+
+/* Card hover */
+.card-minimal {
+    transition: all 0.2s ease;
+}
+.card-minimal:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px oklch(0 0 0 / 0.06);
+}
+
+/* Section reveal */
+.reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
