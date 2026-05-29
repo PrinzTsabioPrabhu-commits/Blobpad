@@ -31,10 +31,13 @@ export function NavUser() {
                     <DropdownMenuTrigger asChild>
                         <SidebarMenuButton
                             size="lg"
-                            className="rounded-lg border-3 border-gray-900 bg-blue-400 text-white shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all font-black"
+                            className="rounded-lg border-3 border-gray-900 bg-blue-400 font-black text-white shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
                         >
                             <UserInfo user={auth.user} />
-                            <ChevronsUpDown className="ml-auto h-4 w-4" strokeWidth={3} />
+                            <ChevronsUpDown
+                                className="ml-auto h-4 w-4"
+                                strokeWidth={3}
+                            />
                         </SidebarMenuButton>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent

@@ -29,9 +29,17 @@ function timeAgo(dateString: string): string {
     return date.toLocaleDateString('id-ID');
 }
 
-const COLORS = ['bg-[#FDC700]', 'bg-blue-400', 'bg-green-400', 'bg-purple-400', 'bg-red-400'];
+const COLORS = [
+    'bg-[#FDC700]',
+    'bg-blue-400',
+    'bg-green-400',
+    'bg-purple-400',
+    'bg-red-400',
+];
 
-export default function FavoritesIndex({ notes: notesPaginated }: FavoritesIndexProps) {
+export default function FavoritesIndex({
+    notes: notesPaginated,
+}: FavoritesIndexProps) {
     const removeFavorite = (noteId: number, e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
@@ -42,17 +50,27 @@ export default function FavoritesIndex({ notes: notesPaginated }: FavoritesIndex
         <>
             <Head title="Favorit — CatatIN" />
             <div className="flex h-full flex-1 flex-col gap-6 overflow-x-auto bg-gradient-to-b from-amber-50 to-yellow-50 p-6 md:p-10">
-
                 <div>
-                    <h1 className="text-3xl font-black tracking-tight text-gray-900 md:text-4xl">⭐ Catatan Favorit</h1>
-                    <p className="mt-2 text-base font-bold text-gray-600">{notesPaginated.data.length} catatan favorit</p>
+                    <h1 className="text-3xl font-black tracking-tight text-gray-900 md:text-4xl">
+                        ⭐ Catatan Favorit
+                    </h1>
+                    <p className="mt-2 text-base font-bold text-gray-600">
+                        {notesPaginated.data.length} catatan favorit
+                    </p>
                 </div>
 
                 {notesPaginated.data.length === 0 ? (
                     <div className="flex flex-col items-center justify-center py-20 text-gray-500">
-                        <Star size={64} strokeWidth={2} className="mb-4 text-gray-300" />
+                        <Star
+                            size={64}
+                            strokeWidth={2}
+                            className="mb-4 text-gray-300"
+                        />
                         <p className="text-xl font-black">Belum ada favorit</p>
-                        <p className="mt-2 font-bold">Tandai catatan sebagai favorit untuk melihatnya di sini</p>
+                        <p className="mt-2 font-bold">
+                            Tandai catatan sebagai favorit untuk melihatnya di
+                            sini
+                        </p>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -60,24 +78,47 @@ export default function FavoritesIndex({ notes: notesPaginated }: FavoritesIndex
                             <Link
                                 key={note.id}
                                 href={noteShow(note.id)}
-                                className="group relative flex flex-col rounded-2xl border-4 border-gray-900 bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)] transition-all hover:-translate-y-1 hover:shadow-[6px_6px_0px_rgba(0,0,0,1)] overflow-hidden"
+                                className="group relative flex flex-col overflow-hidden rounded-2xl border-4 border-gray-900 bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)] transition-all hover:-translate-y-1 hover:shadow-[6px_6px_0px_rgba(0,0,0,1)]"
                             >
-                                <div className={`border-b-4 border-gray-900 ${note.color || COLORS[i % COLORS.length]} px-5 py-3 flex items-center justify-between`}>
-                                    <FileText size={18} strokeWidth={3} className="text-gray-900" />
-                                    <button onClick={(e) => removeFavorite(note.id, e)} className="flex h-8 w-8 items-center justify-center rounded-lg border-2 border-gray-900 bg-white shadow-sm transition-all hover:bg-red-100 hover:scale-110">
-                                        <Star size={14} strokeWidth={3} fill="currentColor" className="text-yellow-500" />
+                                <div
+                                    className={`border-b-4 border-gray-900 ${note.color || COLORS[i % COLORS.length]} flex items-center justify-between px-5 py-3`}
+                                >
+                                    <FileText
+                                        size={18}
+                                        strokeWidth={3}
+                                        className="text-gray-900"
+                                    />
+                                    <button
+                                        onClick={(e) =>
+                                            removeFavorite(note.id, e)
+                                        }
+                                        className="flex h-8 w-8 items-center justify-center rounded-lg border-2 border-gray-900 bg-white shadow-sm transition-all hover:scale-110 hover:bg-red-100"
+                                    >
+                                        <Star
+                                            size={14}
+                                            strokeWidth={3}
+                                            fill="currentColor"
+                                            className="text-yellow-500"
+                                        />
                                     </button>
                                 </div>
-                                <div className="p-5 flex-1">
-                                    <h3 className="text-lg font-black text-gray-900 truncate group-hover:underline">{note.title || 'Tanpa Judul'}</h3>
+                                <div className="flex-1 p-5">
+                                    <h3 className="truncate text-lg font-black text-gray-900 group-hover:underline">
+                                        {note.title || 'Tanpa Judul'}
+                                    </h3>
                                     <div className="mt-2 flex items-center gap-2 text-xs font-bold text-gray-500">
                                         {note.folder && (
                                             <span className="flex items-center gap-1">
-                                                <FolderOpen size={12} strokeWidth={3} /> {note.folder.name}
+                                                <FolderOpen
+                                                    size={12}
+                                                    strokeWidth={3}
+                                                />{' '}
+                                                {note.folder.name}
                                             </span>
                                         )}
                                         <span className="flex items-center gap-1">
-                                            <Clock size={12} strokeWidth={3} /> {timeAgo(note.updated_at)}
+                                            <Clock size={12} strokeWidth={3} />{' '}
+                                            {timeAgo(note.updated_at)}
                                         </span>
                                     </div>
                                 </div>

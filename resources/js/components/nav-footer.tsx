@@ -17,7 +17,10 @@ export function NavFooter({
     items: NavItem[];
 }) {
     return (
-        <SidebarGroup {...props} className={`group-data-[collapsible=icon]:p-0 px-0 py-0 ${className || ''}`}>
+        <SidebarGroup
+            {...props}
+            className={`px-0 py-0 group-data-[collapsible=icon]:p-0 ${className || ''}`}
+        >
             <SidebarGroupContent>
                 <SidebarMenu className="space-y-2">
                     {items.map((item) => (
@@ -25,7 +28,7 @@ export function NavFooter({
                             <SidebarMenuButton
                                 asChild
                                 tooltip={{ children: item.title }}
-                                className="mx-1 rounded-xl border-3 border-gray-900 bg-white text-gray-900 hover:shadow-md hover:-translate-y-0.5 transition-all font-bold"
+                                className="mx-1 rounded-xl border-3 border-gray-900 bg-white font-bold text-gray-900 transition-all hover:-translate-y-0.5 hover:shadow-md"
                             >
                                 <a
                                     href={toUrl(item.href)}
@@ -34,9 +37,14 @@ export function NavFooter({
                                     className="flex items-center gap-3"
                                 >
                                     {item.icon && (
-                                        <item.icon className="h-5 w-5 shrink-0 text-gray-700" strokeWidth={3} />
+                                        <item.icon
+                                            className="h-5 w-5 shrink-0 text-gray-700"
+                                            strokeWidth={3}
+                                        />
                                     )}
-                                    <span className="hidden truncate lg:inline">{item.title}</span>
+                                    <span className="truncate group-data-[collapsible=icon]:hidden">
+                                        {item.title}
+                                    </span>
                                 </a>
                             </SidebarMenuButton>
                         </SidebarMenuItem>

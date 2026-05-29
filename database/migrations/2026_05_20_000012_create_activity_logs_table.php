@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('workspace_id')->constrained('workspaces')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('note_id')->nullable()->constrained('notes')->nullOnDelete(); // Keep log even if note is deleted
-            
+
             $table->string('action'); // e.g., 'created', 'updated', 'deleted', 'shared', 'exported'
             $table->text('description')->nullable();
             $table->string('ip_address', 45)->nullable();

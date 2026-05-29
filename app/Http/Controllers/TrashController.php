@@ -71,7 +71,6 @@ class TrashController extends Controller
             abort(403, 'Catatan ini bukan milik workspace Anda.');
         }
 
-        // Clean up relationships before permanent delete
         $note->tags()->detach();
         $note->favoritedBy()->detach();
 

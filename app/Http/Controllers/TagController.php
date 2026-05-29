@@ -97,7 +97,6 @@ class TagController extends Controller
     {
         $this->authorizeTag($tag, $request);
 
-        // Detach the tag from all notes before deleting
         $tag->notes()->detach();
 
         $tag->delete();

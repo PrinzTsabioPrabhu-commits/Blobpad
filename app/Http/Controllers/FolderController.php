@@ -39,7 +39,7 @@ class FolderController extends Controller
         $workspace = $this->getWorkspace($request);
 
         $folders = $workspace->folders()
-            ->withCount(['notes' => fn($q) => $q->whereNull('deleted_at')])
+            ->withCount(['notes' => fn ($q) => $q->whereNull('deleted_at')])
             ->orderBy('name')
             ->get();
 
@@ -61,10 +61,9 @@ class FolderController extends Controller
             'parent_id' => ['nullable', 'exists:folders,id'],
         ]);
 
-        // Validate parent folder belongs to workspace
-        if (!empty($validated['parent_id'])) {
+        if (! empty($validated['parent_id'])) {
             $parent = Folder::find($validated['parent_id']);
-            if (!$parent || $parent->workspace_id !== $workspace->id) {
+            if (! $parent || $parent->workspace_id !== $workspace->id) {
                 abort(422, 'Folder induk tidak valid.');
             }
         }
@@ -95,7 +94,7 @@ class FolderController extends Controller
             ->latest('updated_at')
             ->paginate(12);
 
-        $folder->loadCount(['notes' => fn($q) => $q->whereNull('deleted_at')]);
+        $folder->loadCount(['notes' => fn ($q) => $q->whereNull('deleted_at')]);
 
         return Inertia::render('folders/show', [
             'folder' => $folder,

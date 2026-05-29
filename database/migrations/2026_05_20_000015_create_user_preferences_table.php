@@ -15,13 +15,13 @@ return new class extends Migration
             $table->id();
             // Strict 1:1 relation with users
             $table->foreignId('user_id')->unique()->constrained('users')->cascadeOnDelete();
-            
+
             $table->string('theme', 20)->default('system'); // system, light, dark
             $table->unsignedInteger('editor_font_size')->default(14);
             $table->boolean('editor_line_wrap')->default(true);
             $table->boolean('auto_save_enabled')->default(true);
             $table->string('keybindings', 20)->default('standard'); // standard, vim, emacs
-            
+
             $table->timestamps();
         });
     }

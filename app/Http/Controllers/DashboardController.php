@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Workspace;
-use App\Models\Note;
-use App\Models\Folder;
-use App\Models\Tag;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -25,7 +23,7 @@ class DashboardController extends Controller
             'totalNotes' => $workspace->notes()->whereNull('deleted_at')->count(),
             'totalFolders' => $workspace->folders()->count(),
             'totalFavorites' => $user->favoriteNotes()
-                ->whereHas('workspace', fn($q) => $q->where('id', $workspace->id))
+                ->whereHas('workspace', fn ($q) => $q->where('id', $workspace->id))
                 ->count(),
         ];
 
@@ -47,16 +45,17 @@ class DashboardController extends Controller
     {
         $user = $request->user();
         $workspace = $user->ownedWorkspaces()->first();
-        
-        if (!$workspace) {
+
+        if (! $workspace) {
             abort(404, 'Workspace not found.');
         }
 
         $notes = $workspace->notes()->whereNull('deleted_at')->with(['folder', 'tags'])->get();
 
-        $fileName = 'catatin_export_' . date('Y-m-d_H-i-s') . '.pdf';
-        
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.export', compact('notes'));
+        $fileName = 'catatin_export_'.date('Y-m-d_H-i-s').'.pdf';
+
+        $pdf = Pdf::loadView('pdf.export', compact('notes'));
+
         return $pdf->download($fileName);
     }
 }

@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Note;
 use App\Models\Folder;
-use App\Models\Tag;
+use App\Models\Note;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Gate;
 
 class NoteController extends Controller
 {
@@ -45,17 +43,14 @@ class NoteController extends Controller
             ->whereNull('deleted_at')
             ->with(['folder:id,name', 'tags:id,name,color']);
 
-        // Filter by folder
         if ($request->filled('folder_id')) {
             $query->where('folder_id', $request->input('folder_id'));
         }
 
-        // Filter by tag
         if ($request->filled('tag_id')) {
-            $query->whereHas('tags', fn($q) => $q->where('tags.id', $request->input('tag_id')));
+            $query->whereHas('tags', fn ($q) => $q->where('tags.id', $request->input('tag_id')));
         }
 
-        // Sorting
         $sortField = $request->input('sort', 'updated_at');
         $sortDirection = $request->input('direction', 'desc');
 
@@ -65,7 +60,6 @@ class NoteController extends Controller
             $query->latest('updated_at');
         }
 
-        // Pinned notes first
         $query->orderByDesc('is_pinned');
 
         $notes = $query->paginate(12)->withQueryString();
@@ -114,18 +108,16 @@ class NoteController extends Controller
             'tags.*' => ['exists:tags,id'],
         ]);
 
-        // Validate folder belongs to workspace
-        if (!empty($validated['folder_id'])) {
+        if (! empty($validated['folder_id'])) {
             $folder = Folder::find($validated['folder_id']);
-            if (!$folder || $folder->workspace_id !== $workspace->id) {
+            if (! $folder || $folder->workspace_id !== $workspace->id) {
                 abort(422, 'Folder tidak valid.');
             }
         }
 
         // Generate title from content if not provided (for quick notes)
         $title = $validated['title'] ?? null;
-        if (!$title && !empty($validated['content'])) {
-            // Use first 50 characters of content as title
+        if (! $title && ! empty($validated['content'])) {
             $title = substr(strip_tags($validated['content']), 0, 50);
             if (strlen($validated['content']) > 50) {
                 $title .= '...';
@@ -142,9 +134,7 @@ class NoteController extends Controller
             'is_pinned' => $validated['is_pinned'] ?? false,
         ]);
 
-        // Sync tags if provided
-        if (!empty($validated['tags'])) {
-            // Validate all tags belong to the workspace
+        if (! empty($validated['tags'])) {
             $validTagIds = $workspace->tags()->whereIn('id', $validated['tags'])->pluck('id');
             $note->tags()->sync($validTagIds);
         }
@@ -173,7 +163,6 @@ class NoteController extends Controller
         $folders = $workspace->folders()->orderBy('name')->get(['id', 'name', 'color']);
         $tags = $workspace->tags()->orderBy('name')->get(['id', 'name', 'color']);
 
-        // Check if current user has favorited this note
         $isFavorited = $request->user()->favoriteNotes()->where('note_id', $note->id)->exists();
 
         return Inertia::render('notes/show', [
@@ -189,7 +178,6 @@ class NoteController extends Controller
      */
     public function edit(Request $request, Note $note)
     {
-        // Redirect to show page which doubles as edit
         return redirect()->route('notes.show', $note);
     }
 
@@ -213,10 +201,9 @@ class NoteController extends Controller
             'tags.*' => ['exists:tags,id'],
         ]);
 
-        // Validate folder belongs to workspace
         if (isset($validated['folder_id']) && $validated['folder_id'] !== null) {
             $folder = Folder::find($validated['folder_id']);
-            if (!$folder || $folder->workspace_id !== $workspace->id) {
+            if (! $folder || $folder->workspace_id !== $workspace->id) {
                 abort(422, 'Folder tidak valid.');
             }
         }
@@ -228,7 +215,7 @@ class NoteController extends Controller
             'color' => array_key_exists('color', $validated) ? $validated['color'] : null,
             'is_pinned' => $validated['is_pinned'] ?? null,
             'is_archived' => $validated['is_archived'] ?? null,
-        ], fn($value) => $value !== null));
+        ], fn ($value) => $value !== null));
 
         // Handle explicit field clears (set to null)
         if ($request->has('folder_id') && $request->input('folder_id') === null) {
@@ -238,7 +225,6 @@ class NoteController extends Controller
             $note->update(['color' => null]);
         }
 
-        // Sync tags if provided
         if ($request->has('tags')) {
             $validTagIds = $workspace->tags()->whereIn('id', $validated['tags'] ?? [])->pluck('id');
             $note->tags()->sync($validTagIds);

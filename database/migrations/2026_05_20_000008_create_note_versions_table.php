@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('note_id')->constrained('notes')->cascadeOnDelete();
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete(); // User who made the edits
-            
+
             $table->string('title')->nullable();
             $table->longText('content')->nullable();
             $table->integer('version_number'); // Incremental counter for versions

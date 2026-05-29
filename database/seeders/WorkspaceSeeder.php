@@ -2,20 +2,20 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\Workspace;
-use App\Models\WorkspaceMember;
+use App\Models\ActivityLog;
+use App\Models\Attachment;
 use App\Models\Folder;
 use App\Models\Note;
-use App\Models\Tag;
-use App\Models\NoteVersion;
-use App\Models\NoteShare;
-use App\Models\Attachment;
-use App\Models\Reminder;
-use App\Models\ActivityLog;
 use App\Models\NoteAiMetadata;
+use App\Models\NoteShare;
+use App\Models\NoteVersion;
+use App\Models\Reminder;
 use App\Models\SearchHistory;
+use App\Models\Tag;
+use App\Models\User;
 use App\Models\UserPreference;
+use App\Models\Workspace;
+use App\Models\WorkspaceMember;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -124,7 +124,7 @@ class WorkspaceSeeder extends Seeder
         $tagUrgent = Tag::create(['workspace_id' => $personalWorkspace->id, 'name' => 'Urgent', 'color' => '#E74C3C']);
         $tagIdea = Tag::create(['workspace_id' => $personalWorkspace->id, 'name' => 'Ide Baru', 'color' => '#F1C40F']);
         $tagReference = Tag::create(['workspace_id' => $personalWorkspace->id, 'name' => 'Referensi', 'color' => '#3498DB']);
-        
+
         $tagSprint = Tag::create(['workspace_id' => $teamWorkspace->id, 'name' => 'Tech-Debt', 'color' => '#E67E22']);
 
         // 7. Seed Notes (JSON Content Block-based representation)
@@ -135,11 +135,11 @@ class WorkspaceSeeder extends Seeder
                 [
                     'type' => 'heading',
                     'attrs' => ['level' => 1],
-                    'content' => [['type' => 'text', 'text' => 'Roadmap Pengembangan Backend Blobpad']]
+                    'content' => [['type' => 'text', 'text' => 'Roadmap Pengembangan Backend Blobpad']],
                 ],
                 [
                     'type' => 'paragraph',
-                    'content' => [['type' => 'text', 'text' => 'Berikut adalah daftar prioritas pengembangan arsitektur database backend.']]
+                    'content' => [['type' => 'text', 'text' => 'Berikut adalah daftar prioritas pengembangan arsitektur database backend.']],
                 ],
                 [
                     'type' => 'taskList',
@@ -147,21 +147,21 @@ class WorkspaceSeeder extends Seeder
                         [
                             'type' => 'taskItem',
                             'attrs' => ['checked' => true],
-                            'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Rancang ERD tabel utama']]]]
+                            'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Rancang ERD tabel utama']]]],
                         ],
                         [
                             'type' => 'taskItem',
                             'attrs' => ['checked' => true],
-                            'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Tentukan indexing, soft delete, dan foreign key constraint']]]]
+                            'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Tentukan indexing, soft delete, dan foreign key constraint']]]],
                         ],
                         [
                             'type' => 'taskItem',
                             'attrs' => ['checked' => false],
-                            'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Implementasi API controller & JWT Auth']]]]
-                        ]
-                    ]
-                ]
-            ]
+                            'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Implementasi API controller & JWT Auth']]]],
+                        ],
+                    ],
+                ],
+            ],
         ];
 
         $noteRoadmap = Note::create([
@@ -182,17 +182,17 @@ class WorkspaceSeeder extends Seeder
                 [
                     'type' => 'heading',
                     'attrs' => ['level' => 2],
-                    'content' => [['type' => 'text', 'text' => 'Daftar Belanja Bulanan']]
+                    'content' => [['type' => 'text', 'text' => 'Daftar Belanja Bulanan']],
                 ],
                 [
                     'type' => 'bulletList',
                     'content' => [
                         ['type' => 'listItem', 'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Kopi Arabika Toraja 500g']]]]],
                         ['type' => 'listItem', 'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Susu Almond Tanpa Pemanis']]]]],
-                        ['type' => 'listItem', 'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Buah Alpukat mentega 2kg']]]]]
-                    ]
-                ]
-            ]
+                        ['type' => 'listItem', 'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Buah Alpukat mentega 2kg']]]]],
+                    ],
+                ],
+            ],
         ];
 
         $noteGroceries = Note::create([
@@ -213,13 +213,13 @@ class WorkspaceSeeder extends Seeder
                 [
                     'type' => 'heading',
                     'attrs' => ['level' => 1],
-                    'content' => [['type' => 'text', 'text' => 'Pembagian Tugas Sprint 1']]
+                    'content' => [['type' => 'text', 'text' => 'Pembagian Tugas Sprint 1']],
                 ],
                 [
                     'type' => 'paragraph',
-                    'content' => [['type' => 'text', 'text' => 'Catatan ini diisi bersama oleh seluruh kontributor dev team.']]
-                ]
-            ]
+                    'content' => [['type' => 'text', 'text' => 'Catatan ini diisi bersama oleh seluruh kontributor dev team.']],
+                ],
+            ],
         ];
 
         $noteTeamSprint = Note::create([
@@ -261,15 +261,15 @@ class WorkspaceSeeder extends Seeder
                 [
                     'type' => 'heading',
                     'attrs' => ['level' => 1],
-                    'content' => [['type' => 'text', 'text' => 'Draf Roadmap Backend']]
+                    'content' => [['type' => 'text', 'text' => 'Draf Roadmap Backend']],
                 ],
                 [
                     'type' => 'paragraph',
-                    'content' => [['type' => 'text', 'text' => 'Inisiasi draf awal arsitektur.']]
-                ]
-            ]
+                    'content' => [['type' => 'text', 'text' => 'Inisiasi draf awal arsitektur.']],
+                ],
+            ],
         ];
-        
+
         NoteVersion::create([
             'note_id' => $noteRoadmap->id,
             'user_id' => $prinz->id,
@@ -322,7 +322,7 @@ class WorkspaceSeeder extends Seeder
             'key_points' => [
                 'Inisialisasi rancangan ERD tabel utama selesai.',
                 'Prioritas saat ini adalah penulisan file migrasi database beserta penentuan indexes dan soft deletes.',
-                'Langkah selanjutnya berfokus pada JWT authentication dan unit testing controller API.'
+                'Langkah selanjutnya berfokus pada JWT authentication dan unit testing controller API.',
             ],
             'tone_sentiment' => 'professional & structured',
             'last_analyzed_hash' => md5(json_encode($roadmapContent)),

@@ -7,9 +7,9 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\Contracts\PasskeyUser;
@@ -51,8 +51,8 @@ class User extends Authenticatable implements PasskeyUser
     public function joinedWorkspaces(): BelongsToMany
     {
         return $this->belongsToMany(Workspace::class, 'workspace_members')
-                    ->withPivot('role')
-                    ->withTimestamps();
+            ->withPivot('role')
+            ->withTimestamps();
     }
 
     /**
@@ -77,7 +77,7 @@ class User extends Authenticatable implements PasskeyUser
     public function favoriteNotes(): BelongsToMany
     {
         return $this->belongsToMany(Note::class, 'favorite_notes')
-                    ->withPivot('created_at');
+            ->withPivot('created_at');
     }
 
     /**

@@ -1,12 +1,12 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\NoteController;
-use App\Http\Controllers\FolderController;
-use App\Http\Controllers\TagController;
 use App\Http\Controllers\FavoriteController;
-use App\Http\Controllers\TrashController;
+use App\Http\Controllers\FolderController;
+use App\Http\Controllers\NoteController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\TrashController;
 use Illuminate\Support\Facades\Route;
 
 Route::inertia('/', 'welcome')->name('home');

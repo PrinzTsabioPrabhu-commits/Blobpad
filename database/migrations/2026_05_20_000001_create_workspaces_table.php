@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('owner_id')->constrained('users')->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes(); // Support trashing of entire workspaces
-            
+
             // Indexing for faster owner lookups
             $table->index('owner_id');
         });

@@ -52,6 +52,6 @@ class Reminder extends Model
     public function scopePending($query)
     {
         return $query->where('is_triggered', false)
-                     ->where('remind_at', '<=', now());
+            ->where('remind_at', '<=', now());
     }
 }

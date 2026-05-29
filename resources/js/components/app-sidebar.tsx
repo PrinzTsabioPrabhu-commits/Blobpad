@@ -1,5 +1,14 @@
 import { Link } from '@inertiajs/react';
-import { LayoutGrid, FileText, FolderOpen, Star, Trash2, Settings, Tag, Search } from 'lucide-react';
+import {
+    LayoutGrid,
+    FileText,
+    FolderOpen,
+    Star,
+    Trash2,
+    Settings,
+    Tag,
+    Search,
+} from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -17,9 +26,7 @@ import { dashboard } from '@/routes';
 import { notes, folders, favorites, tags, search, trash } from '@/lib/routes';
 import type { NavItem } from '@/types';
 
-// ============================================================
 // MAIN NAVIGATION ITEMS (SIMPLIFIED)
-// ============================================================
 const mainNavItems: NavItem[] = [
     {
         title: 'Dasbor',
@@ -44,9 +51,6 @@ const mainNavItems: NavItem[] = [
     },
 ];
 
-// ============================================================
-// FOOTER NAVIGATION ITEMS
-// ============================================================
 const footerNavItems: NavItem[] = [
     {
         title: 'Pengaturan',
@@ -57,12 +61,20 @@ const footerNavItems: NavItem[] = [
 
 export function AppSidebar() {
     return (
-        <Sidebar collapsible="icon" variant="inset" className="border-r-4 border-r-gray-900 bg-[#FFFDF4]">
+        <Sidebar
+            collapsible="icon"
+            variant="inset"
+            className="border-r-4 border-r-gray-900 bg-[#FFFDF4]"
+        >
             {/* ─── HEADER ─── */}
             <SidebarHeader className="border-b-4 border-b-gray-900 bg-[#FDC700] p-3 shadow-md">
                 <SidebarMenu>
                     <SidebarMenuItem>
-                        <SidebarMenuButton size="lg" asChild className="h-11 rounded-lg border-3 border-gray-900 bg-white shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all">
+                        <SidebarMenuButton
+                            size="lg"
+                            asChild
+                            className="h-11 rounded-lg border-3 border-gray-900 bg-white shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
+                        >
                             <Link href={dashboard()} prefetch>
                                 <AppLogo />
                             </Link>

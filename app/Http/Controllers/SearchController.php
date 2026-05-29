@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Note;
 use App\Models\SearchHistory;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -31,12 +30,12 @@ class SearchController extends Controller
         $query = $request->input('q', '');
         $results = collect();
 
-        if (!empty($query)) {
+        if (! empty($query)) {
             $results = $workspace->notes()
                 ->whereNull('deleted_at')
                 ->where(function ($q) use ($query) {
                     $q->where('title', 'LIKE', "%{$query}%")
-                      ->orWhere('content', 'LIKE', "%{$query}%");
+                        ->orWhere('content', 'LIKE', "%{$query}%");
                 })
                 ->with(['folder:id,name', 'tags:id,name,color'])
                 ->orderByDesc('is_pinned')
@@ -44,7 +43,6 @@ class SearchController extends Controller
                 ->paginate(12)
                 ->withQueryString();
 
-            // Save search to history
             SearchHistory::create([
                 'user_id' => $user->id,
                 'workspace_id' => $workspace->id,
