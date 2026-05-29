@@ -17,27 +17,26 @@ export function NavFooter({
     items: NavItem[];
 }) {
     return (
-        <SidebarGroup
-            {...props}
-            className={`group-data-[collapsible=icon]:p-0 ${className || ''}`}
-        >
+        <SidebarGroup {...props} className={`group-data-[collapsible=icon]:p-0 px-0 py-0 ${className || ''}`}>
             <SidebarGroupContent>
-                <SidebarMenu>
+                <SidebarMenu className="space-y-2">
                     {items.map((item) => (
                         <SidebarMenuItem key={item.title}>
                             <SidebarMenuButton
                                 asChild
-                                className="text-neutral-600 hover:text-neutral-800 dark:text-neutral-300 dark:hover:text-neutral-100"
+                                tooltip={{ children: item.title }}
+                                className="mx-1 rounded-xl border-3 border-gray-900 bg-white text-gray-900 hover:shadow-md hover:-translate-y-0.5 transition-all font-bold"
                             >
                                 <a
                                     href={toUrl(item.href)}
                                     target="_blank"
                                     rel="noopener noreferrer"
+                                    className="flex items-center gap-3"
                                 >
                                     {item.icon && (
-                                        <item.icon className="h-5 w-5" />
+                                        <item.icon className="h-5 w-5 shrink-0 text-gray-700" strokeWidth={3} />
                                     )}
-                                    <span>{item.title}</span>
+                                    <span className="hidden truncate lg:inline">{item.title}</span>
                                 </a>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
